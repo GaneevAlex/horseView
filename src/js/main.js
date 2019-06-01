@@ -1,4 +1,4 @@
 import '../styles/main.less';
 import {Field} from './field';
 
-new Field($('.canvas')).create();
+new Field($('.field')).create();

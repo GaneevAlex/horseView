@@ -21,14 +21,19 @@ const COLORS = ['white', 'black'];
  */
 export class Field {
     /**
-     * @param $canvas
+     * @param {jQuery|HTMLElement} $field
      * @constructor
      */
-    constructor ($canvas) {
-        this.$canvas = $canvas;
+    constructor ($field) {
+        /**
+         * @type {jQuery|HTMLElement}
+         */
+        this.$field = $field;
 
-        // Подстраиваем размеры сцены под квадраты
-        this.$canvas.width(Square.size() * FIELD_SIZE_X);
+        /**
+         * @type {jQuery|HTMLElement}
+         */
+        this.$canvas = $('.canvas', this.$field);
 
         this.squares = [];
     }
@@ -45,28 +50,46 @@ export class Field {
         for (let i = 0; i < squareAmount; i++) {
             const color = COLORS[colorChangeCount % 2];
             const square = new Square(color);
-            square.position = `${FIELD_NUMBERS[number]}${FIELD_CHARS[i % 8]}`;
+            square.position = `${FIELD_NUMBERS[number]}${FIELD_CHARS[i % FIELD_SIZE_X]}`;
             this.squares.push(square);
             this.$canvas.append(square.getSquareHTML());
             square.element = $('div', this.$canvas).last();
             colorChangeCount += (colorChangeCount + 2) % (FIELD_SIZE_Y + 1) ? 1 : 2;
-            number = (i && i % FIELD_SIZE_X === 7) ? ++number : number;
+            number = (i && i % FIELD_SIZE_X === (FIELD_SIZE_X -  1)) ? ++number : number;
             this.bind(square.element);
         }
 
         FIELD_NUMBERS.forEach((number) => {
-            $('.numberHeaders').prepend(`<div class="headers">${number}</div>`);
+            $('.numberHeaders', this.$field).prepend(`<div class="headers">${number}</div>`);
         });
 
         FIELD_CHARS.forEach((char) => {
-            $('.charHeaders').append(`<div class="headers">${char.toLocaleUpperCase()}</div>`);
+            $('.charHeaders', this.$field).append(`<div class="headers">${char.toLocaleUpperCase()}</div>`);
         });
 
-        $('.headers').css({
+        this.resize();
+    }
+
+    /**
+     * Изменяет размеры элементов под размер квадрата
+     */
+    resize () {
+        // Подстраиваем размеры сцены под квадраты
+        this.$field.css({
+            width: Square.size() * FIELD_SIZE_X,
+            margin: Square.size(),
+        });
+
+        $('.headers', this.$field).css({
             'font-size':Square.size() / 2,
             width: Square.size(),
             height: Square.size(),
         });
+
+        $('.numberHeaders div', this.$field).css('padding', Square.size() / 4);
+        $('.rightHeaders', this.$field).css('left', Square.size() * FIELD_SIZE_X);
+        $('.leftHeaders', this.$field).css('left', - Square.size());
+        $('.topHeaders', this.$field).css('top', - Square.size());
     }
 
     /**
@@ -80,6 +103,7 @@ export class Field {
 
     /**
      * Биндит обработчик на нажатие по клеткам
+     * @param {jQuery|HTMLElement} $element
      */
     bind ($element) {
         $element.click(({target}) => {

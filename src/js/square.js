@@ -46,6 +46,6 @@ export class Square {
      * @returns {number}
      */
     static size () {
-        return 50;
+        return 40;
     }
 }

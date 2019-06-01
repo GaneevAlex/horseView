@@ -1,74 +1,66 @@
 * {
-    user-select: none;
-    box-sizing: border-box;
+  user-select: none;
+  box-sizing: border-box;
 }
 
 .field {
-    font-family: sans-serif;
-    color: grey;
+  position: absolute;
+  font-family: sans-serif;
+  color: grey;
+  margin: 70px;
+  width: 560px;
 
-    .headers {
-        font-size: 35px;
-        text-align: center;
+  .headers {
+    font-size: 35px;
+    text-align: center;
+  }
+
+  .charHeaders {
+    position: absolute;
+
+    div {
+      display: inline-block;
+      width: 70px;
     }
 
-    .charHeaders {
-        position: relative;
-        right: -68px;
+    &.topHeaders {
+      top: -35px;
+    }
+  }
 
-        div {
-            display: inline-block;
-            width: 70px;
-        }
+  .numberHeaders {
+    position: absolute;
+    top: -4px;
 
-        &.topHeaders {
-            bottom: -15px;
-        }
-
-        &.bottomHeaders {
-            position: relative;
-            top: -20px;
-        }
+    div {
+      height: 70px;
+      padding: 12px;
     }
 
-    .numberHeaders {
-        position: relative;
-        top: -16px;
-        display: inline-block;
-
-        div {
-            height: 70px;
-        }
-
-        &.leftHeaders {
-            left: 20px;
-        }
-
-        &.rightHeaders {
-            position: relative;
-            left: -7px;
-        }
+    &.leftHeaders {
+      left: -40px;
     }
 
-    .canvas {
-        width: 280px;
-        margin-left: 15px;
-        display: inline-block;
-
-        .square {
-            display: inline-block;
-            border: 1px solid grey;
-            width: 70px;
-            height: 70px;
-            margin-top: -4px;
-        }
+    &.rightHeaders {
+      left: 450px;
     }
+  }
+
+  .canvas {
+    .square {
+      display: inline-block;
+      border: 1px solid grey;
+      width: 70px;
+      height: 70px;
+      margin-top: -4px;
+    }
+  }
 }
 
 .button {
-    margin: 20px;
+  margin: 20px;
 }
 
 .timer {
-    margin-left: 20px;
+  margin-left: 20px;
 }
